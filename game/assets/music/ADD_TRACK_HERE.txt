@@ -1,0 +1,1 @@
+Place your music track here as theme.mp3, or change the path in index.html. Click MUSIC: OFF to enable playback. During edible effect, playback rate eases to 0.65 and returns to 1 afterward. Standard HTML audio changes pitch with speed (browser-dependent).

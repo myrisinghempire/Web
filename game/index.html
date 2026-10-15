@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Runner's High Game | Rising Hempire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#0B0D08;--line:#2B2F20;--green:#8FE619;--gold:#D4A72C;--cream:#F1EEE1;--muted:#9C9C8C}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--cream);font-family:'Work Sans',system-ui,sans-serif}
+a{color:inherit;text-decoration:none}header{position:sticky;top:0;z-index:20;background:rgba(11,13,8,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.nav{max-width:1180px;margin:auto;padding:14px 28px;display:flex;align-items:center;gap:25px;justify-content:space-between}
+.brand{font:32px/.9 'Bebas Neue',Impact,sans-serif;letter-spacing:.035em;color:var(--gold);white-space:nowrap}.brand span{color:var(--green)}
+.links{display:flex;align-items:center;gap:22px;font-size:14px}.links a{opacity:.83}.links a:hover,.links a[aria-current]{opacity:1;color:var(--green)}
+main{max-width:1460px;margin:auto;padding:25px 24px 50px}.intro{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 17px}.intro h1{font:clamp(28px,4vw,47px)/1 'Bebas Neue',Impact,sans-serif;margin:0;color:var(--cream)}.intro p{margin:7px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+.expand{background:transparent;color:var(--cream);border:1px solid var(--gold);padding:11px 16px;border-radius:4px;cursor:pointer;font:600 13px 'Work Sans',sans-serif;white-space:nowrap}.expand:hover{background:var(--gold);color:#111}
+.game-shell{width:100%;aspect-ratio:16/9;min-height:400px;border:1px solid #393d26;background:#060709;border-radius:8px;overflow:hidden;box-shadow:0 20px 70px #0008}
+.game-shell iframe{width:100%;height:100%;display:block;border:0;background:#060709}
+.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:15px}footer{border-top:1px solid var(--line);padding:26px;text-align:center;color:var(--muted);font-size:12px}
+@media(max-width:720px){.nav{flex-wrap:wrap;gap:12px;padding:12px 16px}.brand{font-size:27px}.links{width:100%;gap:14px;flex-wrap:wrap;font-size:12px}main{padding:18px 10px 30px}.intro{padding:0 6px}.game-shell{min-height:280px;aspect-ratio:4/3}.intro p{font-size:12px}}
+</style></head><body>
+<header><div class="nav"><a class="brand" href="../" aria-label="Rising Hempire home">RISING <span>HEMPIRE</span></a><nav class="links" aria-label="Site navigation"><a href="../#empire">About Us</a><a href="../#catalog">Catalog</a><a href="../#visit">Visit</a><a href="./" aria-current="page">Runner's High Game</a><a href="../#contact">Contact</a></nav></div></header>
+<main><div class="intro"><div><h1>RUNNER'S HIGH GAME</h1><p>Run the streets of D.C. Dodge roadblocks, collect cash, and chase the HIGH scores.</p></div><button type="button" class="expand" id="expand" aria-label="Play game fullscreen">⛶ FULLSCREEN</button></div>
+<div class="game-shell" id="gameShell"><iframe id="gameFrame" src="game.html" title="Rising Hempire: Runner's High" allow="autoplay; fullscreen" allowfullscreen loading="eager"></iframe></div>
+<p class="note">Click START, then LET'S RUN! to play. Use Space or ↑ to jump, E to use a brownie. Click inside the game to focus keyboard controls. Music starts when you click LET'S RUN!</p></main>
+<footer>© 2026 Rising Hempire · Washington, D.C. · <a href="../">Back to Rising Hempire</a></footer>
+<script>document.getElementById('expand').addEventListener('click',()=>{const el=document.getElementById('gameShell');if(el.requestFullscreen)el.requestFullscreen();});</script>
+</body></html>
