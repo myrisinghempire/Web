@@ -265,21 +265,11 @@ function draw(){
  if(bg.complete&&bg.naturalWidth){
    const sourceTop=51,sourceHeight=Math.min(215,bg.naturalHeight-51);
    const rh=Math.max(H*.67,310),rw=bg.naturalWidth/sourceHeight*rh;
-   // Modulo-based repetition means the scenery can scroll indefinitely.
    const offset=-(((cam*.23)%rw)+rw)%rw;
    for(let x=offset-rw;x<W+rw;x+=rw)ctx.drawImage(bg,0,sourceTop,bg.naturalWidth,sourceHeight,x,ground-rh+18,rw,rh);
  }
- ctx.fillStyle='#23334a';ctx.fillRect(0,ground,W,H-ground);
- ctx.fillStyle='#485565';ctx.fillRect(0,ground,W,7);
- ctx.fillStyle='#657282';
- for(let x=-(cam%110);x<W;x+=110){ctx.fillRect(x,ground+28,67,3);ctx.fillRect(x+85,ground+55,20,2)}
- for(const o of objects){
-   const x=o.x-cam;if(x<-130||x>W+130)continue;
-   if(o.kind==='road'){
-     const y=ground-o.h+20;
-     if(road.complete&&road.naturalWidth)ctx.drawImage(road,x,y,o.w,o.h);
-     else{ctx.fillStyle='#ff8d24';ctx.fillRect(x,y,o.w,o.h)}
-   }else if(!o.taken){
+   }
+   else if(!o.taken){
      const bob=Math.sin(elapsed*4+o.x*.02)*3*scale,w=54*scale,h=37*scale;
      ctx.save();ctx.shadowColor='#ffdc57';ctx.shadowBlur=13;
      if(o.kind==='edible'){const im=edibleFrames[Math.floor(glowClock*7)%4];ctx.shadowColor='#58ff62';if(im.complete&&im.naturalWidth)ctx.drawImage(im,x-w/2,o.y-h/2+bob,w,h)}
