@@ -16,7 +16,13 @@
 .title-art-wrap .title-start:hover,.title-art-wrap .title-start:focus-visible{border:0!important;outline:none!important;background:transparent!important;box-shadow:none!important;color:#fff;text-decoration:underline;text-underline-offset:6px}
 @keyframes title-flash{0%,100%{opacity:1}50%{opacity:.42}}
 @media(prefers-reduced-motion:reduce){.title-art-wrap .title-start{animation:none}}
-</style><style id="start-click-hotfix">#titleScreen{pointer-events:auto!important}#titleStart{pointer-events:auto!important;position:absolute;z-index:2;cursor:pointer!important}</style></head><body><div id="titleScreen" class="title-screen" role="dialog" aria-modal="true" aria-label="Runner's High title screen"><div class="title-art-wrap"><img class="title-screen-art" src="assets/start_menu_stylized.png" alt="Rising Hempire: Runner's High game artwork"><button id="titleStart" class="title-start" type="button">START</button></div></div><canvas id="game"></canvas><div class="game-over-overlay" id="gameOverOverlay" hidden role="dialog" aria-modal="true" aria-label="Game over">
+</style><style id="start-click-hotfix">#titleScreen{pointer-events:auto!important}#titleStart{pointer-events:auto!important;position:absolute;z-index:2;cursor:pointer!important}</style><style id="scene-transitions">
+.scene-curtain{position:fixed;inset:0;z-index:100;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,#22242b 0%,#0a0b10 68%,#020203 100%);transition:opacity .24s ease-in-out;display:grid;place-items:center}
+.scene-curtain.active{opacity:1;pointer-events:auto}
+.scene-curtain::after{content:'✦';font-size:clamp(24px,5vw,50px);color:#f8d35c;opacity:.5;text-shadow:0 0 30px #ffbd37;transform:scale(.7);transition:transform .24s}
+.scene-curtain.active::after{transform:scale(1)}
+@media(prefers-reduced-motion:reduce){.scene-curtain{transition:none}.scene-curtain::after{transition:none}}
+</style></head><body><div id="sceneCurtain" class="scene-curtain" aria-hidden="true"></div><div id="titleScreen" class="title-screen" role="dialog" aria-modal="true" aria-label="Runner's High title screen"><div class="title-art-wrap"><img class="title-screen-art" src="assets/start_menu_stylized.png" alt="Rising Hempire: Runner's High game artwork"><button id="titleStart" class="title-start" type="button">START</button></div></div><canvas id="game"></canvas><div class="game-over-overlay" id="gameOverOverlay" hidden role="dialog" aria-modal="true" aria-label="Game over">
 <div class="game-over-panel"><div style="position:relative;width:100%;display:flex;justify-content:center"><img class="game-over-art" src="assets/game-over-art.png" alt="GAME OVER, the wolf's fallen golden crown, Try Again?"/><button class="game-over-try" id="gameOverTry" type="button" aria-label="Try Again? Restart run" title="Try Again?"></button></div>
 <p class="game-over-summary" id="gameOverSummary"></p><button class="game-over-scores" id="gameOverScores" type="button">🏆 SUBMIT SCORE / “HIGH” SCORES</button></div></div><button class="help-open" id="helpOpen" type="button" aria-label="How to play">? HOW TO PLAY</button><div class="intro-overlay" id="introOverlay" role="dialog" aria-modal="true" aria-labelledby="introTitle"><section class="intro-card"><h2 id="introTitle">RUNNER'S HIGH</h2><p class="subtitle">HOW TO PLAY</p><ul><li><span class="symbol">🏃</span><span><strong>Keep running!</strong> Your wolf runs automatically. Survive as long as you can; the speed increases with distance.</span></li><li><span class="symbol">🚧</span><span><strong>Jump over roadblocks.</strong> Hit one and your run ends.</span></li><li><span class="symbol">💵</span><span><strong>Grab cash.</strong> Every cash stack adds 100 points. Distance also adds to your score.</span></li><li><span class="symbol">✨</span><span><strong>Get near misses.</strong> Barely clear a roadblock for 50 bonus points.</span></li><li><span class="symbol">🍫</span><span><strong>Collect brownies.</strong> Carry up to 3. Use one to slow down for 6 seconds (and warp the music!).</span></li><li><span class="symbol">🏆</span><span><strong>Chase the “HIGH” Scores!</strong> Beat your best run and submit your initials.</span></li></ul><div class="intro-controls"><strong>DESKTOP:</strong> Space / W / ↑ jump · A / D or ← / → adjust speed · E use brownie<br><strong>MOBILE:</strong> Use the on-screen buttons</div><button class="start-game" id="startGame" type="button">LET'S RUN! ▶</button></section></div><div class="hud"><strong>RUNNER'S HIGH</strong><div id="stats">Cash: $0 · Distance: 0m · Score: 0</div><div class="hint">A/D or ←/→ move · Space/W/↑ jump · R restart · Avoid roadblocks!</div></div><div class="inventory" id="inventory" aria-label="Edible inventory"><div><small>EDIBLES</small><small id="buffStatus">3 slots</small></div><div class="slot empty"></div><div class="slot empty"></div><div class="slot empty"></div><button id="useEdible" disabled title="Use edible (E)">USE [E]</button></div><button class="scores-open" id="scoresOpen">🏆 “HIGH” SCORES [H]</button><div class="scores-panel" id="scoresPanel" role="dialog" aria-modal="true" aria-label="High scores"><div class="scores-card"><div class="board-art" aria-label="HIGH Scores top ten leaderboard"><img class="board-image" src="assets/high-scores-board.png" alt="Custom HIGH Scores graffiti arcade leaderboard frame"><div class="board-rows" id="scoresBody" role="list" aria-label="Rankings"></div></div><div class="board-controls"><p class="board-caption"><span id="boardStatus">LOCAL · Configure Supabase for GLOBAL rankings</span> · Distance + cash + near-miss bonuses</p><div class="initials" id="initialsForm"><label for="initialsInput">NEW HIGH SCORE! Enter your initials</label><div class="line"><input id="initialsInput" maxlength="3" placeholder="AAA" autocomplete="off" aria-label="Player initials"><button id="saveScore">SAVE SCORE</button></div></div><div class="scores-actions"><button id="scoresRefresh">REFRESH</button><button id="scoresClose">CLOSE</button><button id="scoresAgain">RUN AGAIN</button></div></div></div></div><div class="buttons"><div class="group"><button data-key="left">◀</button><button data-key="right">▶</button></div><div class="group"><button data-key="jump">↑</button></div></div><div class="banner" id="banner"><h2 id="bannerTitle">Run over!</h2><p id="bannerText"></p><button id="restart">Play again</button></div><div id="musicControls" style="position:fixed;left:18px;bottom:102px;z-index:3;background:#10192cdd;border:1px solid #ffffff55;border-radius:10px;padding:7px 10px;font-size:12px"><button id="musicToggle" style="width:auto;height:30px;padding:0 10px;font-size:12px;border-radius:7px">♫ MUSIC: OFF</button></div><script src="supabase-config.js"></script><script>
 (()=>{
@@ -98,7 +104,25 @@ const introOverlay=document.querySelector('#introOverlay'),startGame=document.qu
 let introVisible=true;
 const titleScreen=document.querySelector('#titleScreen');
 const titleStart=document.querySelector('#titleStart');
-titleStart.addEventListener('click',(event)=>{event.preventDefault();event.stopPropagation();titleScreen.hidden=true;showIntro();});
+const sceneCurtain=document.querySelector('#sceneCurtain');
+let sceneBusy=false;
+const reducedSceneMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function sceneTransition(action){
+ if(sceneBusy)return;
+ sceneBusy=true;
+ const duration=reducedSceneMotion?0:240;
+ sceneCurtain.classList.add('active');
+ setTimeout(()=>{
+  try{action()}finally{
+   requestAnimationFrame(()=>{
+    sceneCurtain.classList.remove('active');
+    setTimeout(()=>{sceneBusy=false},duration);
+   });
+  }
+ },duration);
+}
+
+titleStart.addEventListener('click',(event)=>{event.preventDefault();event.stopPropagation();sceneTransition(()=>{titleScreen.hidden=true;showIntro()});});
 function showIntro(){introVisible=true;introOverlay.hidden=false;keys.left=keys.right=keys.jump=false;startGame.focus()}
 function dismissIntro(){
  introVisible=false;introOverlay.hidden=true;keys.left=keys.right=keys.jump=false;
@@ -112,7 +136,7 @@ function dismissIntro(){
    }else{musicEnabled=true;refreshMusicLabel()}
  }
 }
-startGame.addEventListener('click',dismissIntro);
+startGame.addEventListener('click',()=>sceneTransition(dismissIntro));
 document.querySelector('#helpOpen').addEventListener('click',showIntro);
 const inventory=document.querySelector('#inventory'),slots=[...inventory.querySelectorAll('.slot')],useButton=document.querySelector('#useEdible'),buffStatus=document.querySelector('#buffStatus');
 function updateInventory(){
@@ -186,12 +210,12 @@ function renderScores(){
 function openScores(){gameOverOverlay.hidden=true;keys.left=false;keys.right=false;keys.jump=false;scoresPaused=!ended;scoresPanel.classList.add('visible');renderScores();refreshGlobal();if(pending){initialsForm.classList.add('show');initialsInput.focus()}else initialsForm.classList.remove('show')}
 function closeScores(force=false){if(ended)gameOverOverlay.hidden=false;if(pending&&!force){boardStatus.textContent='SAVE YOUR SCORE OR CHOOSE RUN AGAIN';return}scoresPanel.classList.remove('visible');scoresPaused=false}
 function saveScore(){if(!pending){boardStatus.textContent='NO UNSAVED RUN · Play to submit a score';return;}pending.name=(initialsInput.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,3)||'WLF');lastSavedId=pending.id;scores.push(pending);scores.sort((a,b)=>b.score-a.score||a.id-b.id);scores=scores.slice(0,10);const submitted=pending;pending=null;initialsForm.classList.remove('show');try{localStorage.setItem('rising-hempire-high-scores-v1',JSON.stringify(scores))}catch(e){}renderScores();submitGlobal(submitted)}
-document.querySelector('#scoresOpen').onclick=openScores;
+document.querySelector('#scoresOpen').onclick=()=>sceneTransition(openScores);
 document.querySelector('#scoresRefresh').onclick=refreshGlobal;
-document.querySelector('#scoresClose').onclick=()=>{if(pending){pending=null;initialsForm.classList.remove('show')}closeScores(true)};
-document.querySelector('#scoresAgain').onclick=()=>{pending=null;initialsForm.classList.remove('show');closeScores(true);reset()};
-document.querySelector('#gameOverTry').onclick=()=>{pending=null;reset()};
-document.querySelector('#gameOverScores').onclick=openScores;
+document.querySelector('#scoresClose').onclick=()=>sceneTransition(()=>{if(pending){pending=null;initialsForm.classList.remove('show')}closeScores(true)});
+document.querySelector('#scoresAgain').onclick=()=>sceneTransition(()=>{pending=null;initialsForm.classList.remove('show');closeScores(true);reset()});
+document.querySelector('#gameOverTry').onclick=()=>sceneTransition(()=>{pending=null;reset()});
+document.querySelector('#gameOverScores').onclick=()=>sceneTransition(openScores);
 document.querySelector('#saveScore').onclick=saveScore;
 initialsInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();saveScore()}});
 function gameOver(){
@@ -205,11 +229,11 @@ function gameOver(){
  const run={id:Date.now(),name:'WLF',score:score(),distance:distance(),cash:p.cash*100,near:nearMissBonus};
  if(run.score>0&&(online||scores.length<10||run.score>scores[scores.length-1].score)){pending=run;initialsInput.value=''}
  else pending=null;
- gameOverOverlay.hidden=false;
+ sceneTransition(()=>{gameOverOverlay.hidden=false});
 
 }
 function update(dt){
- if(ended||scoresPaused||introVisible)return;elapsed+=dt;
+ if(ended||scoresPaused||introVisible||sceneBusy)return;elapsed+=dt;
  const move=Number(keys.right)-Number(keys.left);
  // Forward motion is automatic; the player can accelerate or slow down.
  buffTime=Math.max(0,buffTime-dt);
