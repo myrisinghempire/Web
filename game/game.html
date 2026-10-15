@@ -1,0 +1,312 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Rising Hempire: Runner's High</title><style>*{box-sizing:border-box}html,body{margin:0;background:#080d1b;color:white;font-family:system-ui,sans-serif;overflow:hidden}canvas{display:block;width:100vw;height:100vh;touch-action:none}.hud{position:fixed;top:16px;left:18px;pointer-events:none;text-shadow:0 2px 7px #000;font-weight:800}.hud strong{color:#ffce35;font-size:23px}.hint{font-size:12px;opacity:.85;margin-top:6px}.buttons{position:fixed;bottom:22px;left:18px;right:18px;display:flex;justify-content:space-between;pointer-events:none}.group{display:flex;gap:12px}button{pointer-events:auto;border:1px solid #ffffff70;background:#101b33bb;color:white;border-radius:16px;width:66px;height:66px;font-size:28px;font-weight:900;touch-action:none;user-select:none}button:active{background:#d9a92288}.banner{position:fixed;left:50%;top:27%;transform:translateX(-50%);padding:22px 28px;background:#0c1425dd;border:1px solid #eebf3d;border-radius:18px;text-align:center;display:none;min-width:260px}.banner button{font-size:16px;width:auto;height:auto;padding:12px 24px;margin-top:10px}.inventory{position:fixed;top:14px;right:18px;background:#10192cda;border:1px solid #79df7e70;border-radius:14px;padding:9px 12px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 18px #0008}.inventory .slot{width:48px;height:46px;border:1px dashed #91bd9e70;border-radius:9px;background:#0b1325b0;display:grid;place-items:center}.inventory img{width:43px;height:39px;object-fit:contain}.inventory .slot.empty{opacity:.4}.inventory button{width:auto;height:42px;padding:0 12px;border-radius:10px;font-size:13px}.inventory button:disabled{opacity:.4}.inventory small{display:block;color:#b1e5b8;font-size:11px}.buff{color:#90ff91;font-weight:800}.hud{max-width:calc(100vw - 340px)}@media(max-width:700px){.inventory{top:auto;bottom:105px;right:12px;padding:6px;gap:4px}.inventory .slot{width:38px;height:38px}.inventory img{width:34px;height:33px}.inventory button{padding:0 7px;font-size:11px}.hud{max-width:calc(100vw - 20px);font-size:12px}.hint{max-width:280px}} .scores-open{position:fixed;top:16px;left:50%;transform:translateX(-50%);width:auto;height:39px;padding:0 17px;font-size:13px;border-radius:11px;background:#172a27ed;border-color:#6cd979;z-index:3}.scores-panel{position:fixed;inset:0;background:#050a12bd;z-index:5;display:none;align-items:center;justify-content:center;padding:16px}.scores-panel.visible{display:flex}.scores-card{background:#101c28;border:1px solid #73dd79;border-radius:20px;width:min(720px,96vw);max-height:90vh;overflow:auto;padding:20px;box-shadow:0 15px 65px #000c}.scores-card h2{margin:0 0 5px;color:#a7fa86;letter-spacing:2px}.scores-card p{color:#c9d8d0;font-size:13px}.scores-table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}.scores-table th,.scores-table td{text-align:right;padding:9px 6px;border-bottom:1px solid #ffffff19}.scores-table th:nth-child(2),.scores-table td:nth-child(2){text-align:left}.scores-table tr.highlight{background:#274a35}.scores-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:15px}.scores-actions button,.initials button{width:auto;height:39px;padding:0 15px;font-size:14px;border-radius:10px}.initials{display:none;margin:14px 0;padding:12px;border:1px solid #b2dc6a;border-radius:12px;background:#1e3528}.initials.show{display:block}.initials input{width:85px;height:39px;background:#091b14;color:#fff;border:1px solid #8bd37e;border-radius:8px;text-align:center;font-size:19px;font-weight:800;text-transform:uppercase}.initials label{display:block;margin-bottom:8px;font-weight:700}.initials .line{display:flex;gap:9px;align-items:center}.banner{z-index:2}@media(max-width:650px){.scores-open{top:82px;left:18px;transform:none}.scores-table{font-size:11px}.scores-table th,.scores-table td{padding:8px 3px}.scores-card{padding:12px}} </style><style id="custom-high-scores">.scores-panel{padding:10px;background:#030303d9;overflow-y:auto;align-items:flex-start}.scores-card{position:relative;width:min(540px,96vw);max-height:none;margin:auto;background:transparent;border:0;border-radius:0;padding:0;overflow:visible;box-shadow:none}.board-art{position:relative;width:100%;aspect-ratio:1024 / 1536}.board-image{width:100%;height:100%;display:block;object-fit:contain}.board-rows{position:absolute;left:13.7%;top:35.15%;width:72.7%;height:51.6%;display:flex;flex-direction:column;justify-content:space-between}.board-entry{height:9.15%;display:grid;grid-template-columns:12% 22% 1fr;align-items:center;gap:1%;padding:0 5%;font-weight:1000;font-family:Impact,'Arial Black',system-ui,sans-serif;font-size:clamp(10px,2.9vw,20px);letter-spacing:.035em;color:#f5f5f5;text-shadow:0 2px 3px #000,0 0 7px #000;white-space:nowrap}.board-entry .rank{color:#ffe261}.board-entry .player{color:#fff}.board-entry .points{text-align:right;color:#f5f5f5;font-variant-numeric:tabular-nums}.board-entry:nth-child(1) .rank,.board-entry:nth-child(1) .points{color:#ffe767;text-shadow:0 0 10px #ffb300,0 2px 2px #000}.board-entry:nth-child(2) .points{color:#e2e6ee}.board-entry:nth-child(3) .points{color:#ffc491}.board-entry.highlight{filter:drop-shadow(0 0 5px #87ff64)}.board-entry.empty{opacity:.25}.board-controls{background:#10141df2;border:1px solid #d5b750;border-radius:12px;padding:10px 12px;margin:4px auto 14px;max-width:95%}.board-caption{margin:0 0 8px!important;text-align:center}.scores-actions{margin-top:8px;justify-content:center;flex-wrap:wrap}.scores-actions button{background:#241f17;border-color:#e3b13b}.initials{margin:8px 0}.scores-open{z-index:4}@media(max-width:650px){.scores-panel{padding:4px}.scores-card{width:min(98vw,470px)}.board-entry{font-size:clamp(9px,3.1vw,17px);padding:0 4%}.board-controls{padding:8px}.scores-actions button{padding:0 9px;font-size:12px}}@media(min-width:651px){.board-entry{font-size:19px}}</style><style id="how-to-play-styles">.help-open{position:fixed;top:61px;left:50%;transform:translateX(-50%);z-index:4;width:auto;height:32px;padding:0 13px;font-size:12px;border-radius:10px;background:#182b28e8;border-color:#7bd885}.intro-overlay{position:fixed;inset:0;z-index:20;background:#040812e8;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}.intro-overlay[hidden]{display:none}.intro-card{width:min(480px,96vw);max-height:calc(100dvh - 32px);overflow:auto;border:2px solid #f4c94d;border-radius:20px;background:linear-gradient(145deg,#23212a,#0c151f 75%);box-shadow:0 0 35px #e3a62e35,0 22px 80px #000b;padding:22px 24px;text-align:center}.intro-card h2{margin:0;color:#ffdb5c;font-size:clamp(24px,5vw,33px);text-shadow:0 2px 2px #000}.intro-card .subtitle{color:#b9efaa;font-weight:800;letter-spacing:2px;font-size:13px;margin:4px 0 15px}.intro-card ul{padding:0;margin:0 0 15px;list-style:none;text-align:left;display:grid;gap:9px}.intro-card li{display:flex;align-items:flex-start;gap:11px;line-height:1.35;font-size:14px}.intro-card li .symbol{font-size:23px;min-width:31px;text-align:center}.intro-card strong{color:#ffe18b}.intro-controls{padding:10px;background:#ffffff0b;border-radius:10px;font-size:13px;line-height:1.55}.intro-controls strong{color:#b7f8a9}.intro-card .start-game{width:100%;height:51px;margin-top:15px;background:linear-gradient(90deg,#d93624,#e6a82a);border:1px solid #ffdf68;color:#101015;font-size:18px;border-radius:12px;cursor:pointer}.intro-card .start-game:focus-visible,.help-open:focus-visible{outline:3px solid white;outline-offset:3px}@media(max-width:650px){.help-open{top:126px;left:18px;transform:none}.intro-card{padding:16px}.intro-card li{font-size:13px}}</style><style id="title-screen-style">.title-screen{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 35%,#21100e,#050509 75%);padding:12px;overflow:auto}.title-screen[hidden]{display:none}.title-screen-art{display:block;width:min(92vw,1060px);max-height:76dvh;object-fit:contain;filter:drop-shadow(0 10px 28px #000a)}.title-start{display:block;width:auto;height:auto;margin:0;padding:12px 48px;border:0;background:transparent;color:#fff;font:900 clamp(27px,5vw,46px)/1 Impact,'Arial Black',system-ui,sans-serif;letter-spacing:.22em;text-shadow:0 0 10px #fff8;cursor:pointer;animation:title-flash 1.25s ease-in-out infinite}.title-start:hover,.title-start:focus-visible{color:#fff1b5;text-shadow:0 0 18px #ffdb67;outline:2px solid #fff9;outline-offset:3px}@keyframes title-flash{0%,100%{opacity:1}50%{opacity:.25}}@media(prefers-reduced-motion:reduce){.title-start{animation:none}}</style><style id="game-over-styles">
+.game-over-overlay{position:fixed;inset:0;z-index:25;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(30,32,36,.62);backdrop-filter:grayscale(.7) blur(3px)}
+.game-over-overlay[hidden]{display:none}
+.game-over-panel{position:relative;width:min(900px,95vw);max-height:94dvh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.game-over-art{display:block;width:100%;max-height:76dvh;object-fit:contain;opacity:.92;filter:drop-shadow(0 18px 36px #0009)}
+.game-over-try{position:absolute;left:33%;width:34%;height:15%;bottom:10%;border:0;border-radius:10px;background:transparent;color:transparent;cursor:pointer}
+.game-over-try:hover,.game-over-try:focus-visible{background:#ffffff18;outline:2px solid #ffda6a;outline-offset:1px}
+.game-over-summary{margin:0 0 10px;color:#fff;text-shadow:0 2px 6px #000;font-size:clamp(12px,2vw,17px);font-weight:800;text-align:center}
+.game-over-scores{height:42px;width:auto;padding:0 18px;border-radius:10px;font-size:14px;background:#161a22e8;border:1px solid #e4c16b;cursor:pointer}
+@media(max-height:540px){.game-over-art{max-height:65dvh}.game-over-panel{max-height:96dvh}}
+</style><style id="start-position-refinement">
+/* The START label is positioned relative to the artwork, not the viewport. */
+.title-art-wrap{position:relative;display:block;width:min(92vw,1060px,calc(76dvh * 2048 / 1376));aspect-ratio:2048/1376;flex:none}
+.title-art-wrap .title-screen-art{width:100%;height:100%;max-height:none;object-fit:contain}
+.title-art-wrap .title-start{position:absolute;left:70%;top:65%;transform:translateX(-50%);margin:0;padding:6px 14px;min-width:0;min-height:0;border:0!important;border-radius:0!important;outline:none!important;background:transparent!important;box-shadow:none!important;color:white;font-size:clamp(16px,2.8vw,35px);letter-spacing:.19em;line-height:1.1;text-shadow:0 0 8px #fff7,0 0 15px #fff3;animation:title-flash 1.7s ease-in-out infinite}
+.title-art-wrap .title-start:hover,.title-art-wrap .title-start:focus-visible{border:0!important;outline:none!important;background:transparent!important;box-shadow:none!important;color:#fff;text-decoration:underline;text-underline-offset:6px}
+@keyframes title-flash{0%,100%{opacity:1}50%{opacity:.42}}
+@media(prefers-reduced-motion:reduce){.title-art-wrap .title-start{animation:none}}
+</style><style id="start-click-hotfix">#titleScreen{pointer-events:auto!important}#titleStart{pointer-events:auto!important;position:absolute;z-index:2;cursor:pointer!important}</style></head><body><div id="titleScreen" class="title-screen" role="dialog" aria-modal="true" aria-label="Runner's High title screen"><div class="title-art-wrap"><img class="title-screen-art" src="assets/start_menu_stylized.png" alt="Rising Hempire: Runner's High game artwork"><button id="titleStart" class="title-start" type="button">START</button></div></div><canvas id="game"></canvas><div class="game-over-overlay" id="gameOverOverlay" hidden role="dialog" aria-modal="true" aria-label="Game over">
+<div class="game-over-panel"><div style="position:relative;width:100%;display:flex;justify-content:center"><img class="game-over-art" src="assets/game-over-art.png" alt="GAME OVER, the wolf's fallen golden crown, Try Again?"/><button class="game-over-try" id="gameOverTry" type="button" aria-label="Try Again? Restart run" title="Try Again?"></button></div>
+<p class="game-over-summary" id="gameOverSummary"></p><button class="game-over-scores" id="gameOverScores" type="button">🏆 SUBMIT SCORE / “HIGH” SCORES</button></div></div><button class="help-open" id="helpOpen" type="button" aria-label="How to play">? HOW TO PLAY</button><div class="intro-overlay" id="introOverlay" role="dialog" aria-modal="true" aria-labelledby="introTitle"><section class="intro-card"><h2 id="introTitle">RUNNER'S HIGH</h2><p class="subtitle">HOW TO PLAY</p><ul><li><span class="symbol">🏃</span><span><strong>Keep running!</strong> Your wolf runs automatically. Survive as long as you can; the speed increases with distance.</span></li><li><span class="symbol">🚧</span><span><strong>Jump over roadblocks.</strong> Hit one and your run ends.</span></li><li><span class="symbol">💵</span><span><strong>Grab cash.</strong> Every cash stack adds 100 points. Distance also adds to your score.</span></li><li><span class="symbol">✨</span><span><strong>Get near misses.</strong> Barely clear a roadblock for 50 bonus points.</span></li><li><span class="symbol">🍫</span><span><strong>Collect brownies.</strong> Carry up to 3. Use one to slow down for 6 seconds (and warp the music!).</span></li><li><span class="symbol">🏆</span><span><strong>Chase the “HIGH” Scores!</strong> Beat your best run and submit your initials.</span></li></ul><div class="intro-controls"><strong>DESKTOP:</strong> Space / W / ↑ jump · A / D or ← / → adjust speed · E use brownie<br><strong>MOBILE:</strong> Use the on-screen buttons</div><button class="start-game" id="startGame" type="button">LET'S RUN! ▶</button></section></div><div class="hud"><strong>RUNNER'S HIGH</strong><div id="stats">Cash: $0 · Distance: 0m · Score: 0</div><div class="hint">A/D or ←/→ move · Space/W/↑ jump · R restart · Avoid roadblocks!</div></div><div class="inventory" id="inventory" aria-label="Edible inventory"><div><small>EDIBLES</small><small id="buffStatus">3 slots</small></div><div class="slot empty"></div><div class="slot empty"></div><div class="slot empty"></div><button id="useEdible" disabled title="Use edible (E)">USE [E]</button></div><button class="scores-open" id="scoresOpen">🏆 “HIGH” SCORES [H]</button><div class="scores-panel" id="scoresPanel" role="dialog" aria-modal="true" aria-label="High scores"><div class="scores-card"><div class="board-art" aria-label="HIGH Scores top ten leaderboard"><img class="board-image" src="assets/high-scores-board.png" alt="Custom HIGH Scores graffiti arcade leaderboard frame"><div class="board-rows" id="scoresBody" role="list" aria-label="Rankings"></div></div><div class="board-controls"><p class="board-caption"><span id="boardStatus">LOCAL · Configure Supabase for GLOBAL rankings</span> · Distance + cash + near-miss bonuses</p><div class="initials" id="initialsForm"><label for="initialsInput">NEW HIGH SCORE! Enter your initials</label><div class="line"><input id="initialsInput" maxlength="3" placeholder="AAA" autocomplete="off" aria-label="Player initials"><button id="saveScore">SAVE SCORE</button></div></div><div class="scores-actions"><button id="scoresRefresh">REFRESH</button><button id="scoresClose">CLOSE</button><button id="scoresAgain">RUN AGAIN</button></div></div></div></div><div class="buttons"><div class="group"><button data-key="left">◀</button><button data-key="right">▶</button></div><div class="group"><button data-key="jump">↑</button></div></div><div class="banner" id="banner"><h2 id="bannerTitle">Run over!</h2><p id="bannerText"></p><button id="restart">Play again</button></div><div id="musicControls" style="position:fixed;left:18px;bottom:102px;z-index:3;background:#10192cdd;border:1px solid #ffffff55;border-radius:10px;padding:7px 10px;font-size:12px"><button id="musicToggle" style="width:auto;height:30px;padding:0 10px;font-size:12px;border-radius:7px">♫ MUSIC: OFF</button></div><script src="supabase-config.js"></script><script>
+(()=>{
+'use strict';
+const canvas=document.querySelector('canvas'),ctx=canvas.getContext('2d'),stats=document.querySelector('#stats'),banner=document.querySelector('#banner');
+const keys={left:false,right:false,jump:false},sprites=[];
+// Official Runner's High soundtrack; included in this build.
+// Browser audio requires a player gesture before it can play.
+const soundtrack=new Audio('assets/music/theme.mp3');
+soundtrack.loop=true;soundtrack.preload='auto';
+// Disable pitch correction: slower playback MUST lower the pitch for the warped brownie effect.
+soundtrack.preservesPitch=false;
+if('mozPreservesPitch' in soundtrack)soundtrack.mozPreservesPitch=false;
+if('webkitPreservesPitch' in soundtrack)soundtrack.webkitPreservesPitch=false;
+const musicToggle=document.querySelector('#musicToggle');
+let musicEnabled=false;
+function refreshMusicLabel(){musicToggle.textContent=musicEnabled?'♫ MUSIC: ON':'♫ MUSIC: OFF'}
+musicToggle.addEventListener('click',async()=>{
+ if(musicEnabled){soundtrack.pause();musicEnabled=false;refreshMusicLabel();return}
+ try{await soundtrack.play();musicEnabled=true}catch(e){musicEnabled=false;musicToggle.textContent='♫ TAP TO ENABLE AUDIO'}
+ refreshMusicLabel();
+});
+function updateMusicRate(dt){
+ const target=buffTime>0?.65:1;
+ const factor=Math.min(1,dt*5);
+ soundtrack.playbackRate+= (target-soundtrack.playbackRate)*factor;
+ if(Math.abs(soundtrack.playbackRate-target)<.005)soundtrack.playbackRate=target;
+}
+
+for(let i=1;i<=4;i++){const im=new Image();im.src=`assets/risingwolf-${i}.png`;sprites.push(im)}
+const jumpSprite=new Image();jumpSprite.src='assets/risingwolf-jump.png';
+function load(src){const im=new Image();im.src=src;return im}
+const bg=load('assets/DC_BG_Sidescroller.png'),cash=load('assets/cash.png'),road=load('assets/roadblock.png'),edibleFrames=[1,2,3,4].map(i=>load(`assets/edible-${i}.png`));
+let W,H,dpr,scale,ground,cam=0,last=0,glowClock=0,ended=false,objects=[],particles=[],nextObstacle=0,nextCash=0,elapsed=0,best=0,nearMisses=0,nearMissBonus=0,toast=null,nextEdible=0,edibles=0,buffTime=0;
+try{best=Number(localStorage.getItem('rising-hempire-best')||0)}catch(e){}
+const p={x:90,y:0,vy:0,w:115,h:139,onGround:true,face:1,step:0,cash:0};
+const rand=(a,b)=>a+Math.random()*(b-a);
+const distance=()=>Math.max(0,Math.floor((p.x-90)/10));
+const score=()=>distance()+p.cash*100+nearMissBonus;
+const currentSpeed=()=>260+Math.min(300,Math.floor(distance()/250)*20);
+function resize(){
+ const prevGround=ground||0;dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;
+ canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+ scale=Math.max(.78,Math.min(1.25,H/720));ground=H-Math.max(68,H*.13);
+ p.w=92*scale;p.h=111.2*scale;
+ if(p.onGround)p.y=ground-p.h;else if(prevGround)p.y+=ground-prevGround;
+}
+function spawnAhead(){
+ const ahead=p.x+Math.max(W*1.7,1100);
+ while(nextObstacle<ahead){
+   const x=nextObstacle;
+   const w=123.552*scale,h=110.88*scale;
+   objects.push({kind:'road',x,w,h,passed:false});
+   // Keep a safe lead-in after each obstacle for fair jumps.
+   nextObstacle+=rand(850,1250)*scale;
+ }
+ while(nextEdible<ahead){
+   objects.push({kind:'edible',x:nextEdible,y:ground-rand(95,135)*scale,taken:false});
+   nextEdible+=rand(1500,2350)*scale;
+ }
+ while(nextCash<ahead){
+   const x=nextCash;
+   // Mostly ground-level rewards, sometimes a higher jump reward.
+   const elevated=Math.random()<.32;
+   const y=ground-(elevated?rand(145,195):rand(87,116))*scale;
+   objects.push({kind:'cash',x,y,taken:false});
+   nextCash+=rand(190,350)*scale;
+ }
+}
+function reset(){
+ gameOverOverlay.hidden=true;
+ soundtrack.playbackRate=1;
+ closeScores(true);
+ ended=false;banner.style.display='none';cam=0;elapsed=0;objects=[];particles=[];nearMisses=0;nearMissBonus=0;toast=null;edibles=0;buffTime=0;
+ p.x=90;p.y=ground-p.h;p.vy=0;p.onGround=true;p.face=1;p.step=0;p.cash=0;
+ nextObstacle=Math.max(900,W*.85);nextCash=400;nextEdible=rand(900,1450);spawnAhead();updateHUD();updateInventory();
+}
+const introOverlay=document.querySelector('#introOverlay'),startGame=document.querySelector('#startGame');
+let introVisible=true;
+const titleScreen=document.querySelector('#titleScreen');
+const titleStart=document.querySelector('#titleStart');
+titleStart.addEventListener('click',(event)=>{event.preventDefault();event.stopPropagation();titleScreen.hidden=true;showIntro();});
+function showIntro(){introVisible=true;introOverlay.hidden=false;keys.left=keys.right=keys.jump=false;startGame.focus()}
+function dismissIntro(){
+ introVisible=false;introOverlay.hidden=true;keys.left=keys.right=keys.jump=false;
+ // Initiate playback synchronously within the Let's Run user gesture.
+ // This satisfies browser audio autoplay restrictions.
+ if(!musicEnabled){
+   const playRequest=soundtrack.play();
+   if(playRequest&&typeof playRequest.then==='function'){
+     playRequest.then(()=>{musicEnabled=true;refreshMusicLabel()})
+       .catch(()=>{musicEnabled=false;musicToggle.textContent='♫ TAP TO ENABLE AUDIO'});
+   }else{musicEnabled=true;refreshMusicLabel()}
+ }
+}
+startGame.addEventListener('click',dismissIntro);
+document.querySelector('#helpOpen').addEventListener('click',showIntro);
+const inventory=document.querySelector('#inventory'),slots=[...inventory.querySelectorAll('.slot')],useButton=document.querySelector('#useEdible'),buffStatus=document.querySelector('#buffStatus');
+function updateInventory(){
+ slots.forEach((slot,i)=>{const filled=i<edibles;slot.classList.toggle('empty',!filled);if(filled&&!slot.firstElementChild)slot.innerHTML='<img src="assets/edible-1.png" alt="Edible">';else if(!filled&&slot.firstElementChild)slot.replaceChildren();});
+ useButton.disabled=edibles===0||ended||buffTime>0;
+ buffStatus.textContent=buffTime>0?`SLOW ${buffTime.toFixed(1)}s`:`${edibles}/3 held`;
+}
+function useEdible(){
+ if(introVisible||ended||scoresPaused||buffTime>0||edibles<1)return;
+ edibles--;buffTime=6;
+ updateMusicRate(.1);
+ toast={text:'SLOW-MO ACTIVATED!',x:p.x,y:p.y-25*scale,life:1.2};
+ updateInventory();
+}
+useButton.addEventListener('click',useEdible);
+function jump(){if(!introVisible&&!scoresPaused&&!ended&&p.onGround){p.vy=-991.9*scale;p.onGround=false}}
+function setKey(k,on){if(k==='jump'){if(on&&!keys.jump)jump();keys.jump=on}else keys[k]=on}
+addEventListener('keydown',e=>{
+ if(introVisible){if(e.code==='Enter'&&document.activeElement===startGame){e.preventDefault();dismissIntro()}else if(['Space','ArrowUp','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();return}
+ if(document.activeElement===initialsInput)return;
+ const k=({ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump'})[e.code];
+ if(k){e.preventDefault();setKey(k,true)}
+ if(e.code==='KeyR'&&document.activeElement!==initialsInput)reset();
+ if(e.code==='KeyH'&&!e.repeat&&document.activeElement!==initialsInput){e.preventDefault();openScores()}
+ if(e.code==='Escape'&&scoresPanel.classList.contains('visible'))closeScores();
+ if(e.code==='KeyE'&&!e.repeat){e.preventDefault();useEdible()}
+});
+addEventListener('keyup',e=>{
+ const k=({ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump'})[e.code];
+ if(k){e.preventDefault();setKey(k,false)}
+});
+addEventListener('blur',()=>{keys.left=keys.right=keys.jump=false});
+for(const b of document.querySelectorAll('[data-key]')){
+ const k=b.dataset.key;
+ b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);setKey(k,true)});
+ for(const ev of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(ev,()=>setKey(k,false));
+}
+document.querySelector('#restart').onclick=reset;
+function updateHUD(){stats.textContent=`Cash: $${(p.cash*100).toLocaleString()} · Distance: ${distance().toLocaleString()}m · Score: ${score().toLocaleString()} · Speed: ${Math.round((buffTime>0?currentSpeed()*.65:currentSpeed())/260*100)}% · Near misses: ${nearMisses} · Best: ${best.toLocaleString()}`}
+const gameOverOverlay=document.querySelector('#gameOverOverlay');
+const scoresPanel=document.querySelector('#scoresPanel'),scoresBody=document.querySelector('#scoresBody'),initialsForm=document.querySelector('#initialsForm'),initialsInput=document.querySelector('#initialsInput');
+let scores=[],pending=null,scoresPaused=false,globalScores=[],lastSavedId=null;
+const cfg=window.RISING_SUPABASE||{},online=Boolean(cfg.url&&cfg.anonKey),boardStatus=document.querySelector('#boardStatus');
+const api=(path,options={})=>fetch(cfg.url.replace(/\/$/,'')+'/rest/v1/'+path,{...options,headers:{apikey:cfg.anonKey,Authorization:'Bearer '+cfg.anonKey,'Content-Type':'application/json',...(options.headers||{})}});
+async function refreshGlobal(){
+ if(!online){boardStatus.textContent='LOCAL · Configure Supabase for GLOBAL rankings';renderScores();return}
+ boardStatus.textContent='GLOBAL · Loading…';
+ try{const r=await api('high_scores?select=id,initials,score,distance,cash,near_miss_bonus&order=score.desc,created_at.asc&limit=10');if(!r.ok)throw Error('HTTP '+r.status);globalScores=(await r.json()).map(x=>({id:x.id,name:x.initials,score:x.score,distance:x.distance,cash:x.cash,near:x.near_miss_bonus}));boardStatus.textContent='GLOBAL · Supabase · Top 10';}
+ catch(e){boardStatus.textContent='GLOBAL UNAVAILABLE · Showing local scores';globalScores=[];}
+ renderScores();
+}
+async function submitGlobal(run){
+ if(!online){boardStatus.textContent='SCORE SAVED LOCALLY · Global board not connected';return}
+ try{const r=await api('rpc/submit_high_score',{method:'POST',body:JSON.stringify({p_initials:run.name,p_distance:run.distance,p_cash:run.cash,p_near_miss_bonus:run.near})});if(!r.ok)throw Error('HTTP '+r.status);await refreshGlobal();}
+ catch(e){boardStatus.textContent='GLOBAL SUBMISSION FAILED · Local score saved';renderScores()}
+}
+
+try{const data=JSON.parse(localStorage.getItem('rising-hempire-high-scores-v1')||'[]');if(Array.isArray(data))scores=data.filter(e=>e&&Number.isFinite(e.score)).slice(0,10)}catch(e){}
+function renderScores(){
+ scoresBody.replaceChildren();
+ const rows=online&&boardStatus.textContent.startsWith('GLOBAL ·')?globalScores:scores;
+ for(let i=0;i<10;i++){
+  const e=rows[i],item=document.createElement('div');item.className='board-entry'+(!e?' empty':'')+(e&&e.id===lastSavedId?' highlight':'');item.setAttribute('role','listitem');
+  const rank=document.createElement('span'),player=document.createElement('span'),points=document.createElement('span');
+  rank.className='rank';player.className='player';points.className='points';
+  rank.textContent=String(i+1).padStart(2,'0');player.textContent=e?String(e.name).slice(0,3):'---';points.textContent=e?Number(e.score).toLocaleString():'—';
+  if(e)item.title=`${e.name} · ${e.distance}m · $${e.cash} cash · ${e.near} near-miss bonus`;
+  item.append(rank,player,points);scoresBody.append(item);
+ }
+}
+function openScores(){gameOverOverlay.hidden=true;keys.left=false;keys.right=false;keys.jump=false;scoresPaused=!ended;scoresPanel.classList.add('visible');renderScores();refreshGlobal();if(pending){initialsForm.classList.add('show');initialsInput.focus()}else initialsForm.classList.remove('show')}
+function closeScores(force=false){if(ended)gameOverOverlay.hidden=false;if(pending&&!force){boardStatus.textContent='SAVE YOUR SCORE OR CHOOSE RUN AGAIN';return}scoresPanel.classList.remove('visible');scoresPaused=false}
+function saveScore(){if(!pending){boardStatus.textContent='NO UNSAVED RUN · Play to submit a score';return;}pending.name=(initialsInput.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,3)||'WLF');lastSavedId=pending.id;scores.push(pending);scores.sort((a,b)=>b.score-a.score||a.id-b.id);scores=scores.slice(0,10);const submitted=pending;pending=null;initialsForm.classList.remove('show');try{localStorage.setItem('rising-hempire-high-scores-v1',JSON.stringify(scores))}catch(e){}renderScores();submitGlobal(submitted)}
+document.querySelector('#scoresOpen').onclick=openScores;
+document.querySelector('#scoresRefresh').onclick=refreshGlobal;
+document.querySelector('#scoresClose').onclick=()=>{if(pending){pending=null;initialsForm.classList.remove('show')}closeScores(true)};
+document.querySelector('#scoresAgain').onclick=()=>{pending=null;initialsForm.classList.remove('show');closeScores(true);reset()};
+document.querySelector('#gameOverTry').onclick=()=>{pending=null;reset()};
+document.querySelector('#gameOverScores').onclick=openScores;
+document.querySelector('#saveScore').onclick=saveScore;
+initialsInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();saveScore()}});
+function gameOver(){
+ soundtrack.playbackRate=1;
+ ended=true;best=Math.max(best,score());
+ try{localStorage.setItem('rising-hempire-best',String(best))}catch(e){}
+ document.querySelector('#bannerTitle').textContent='Roadblock hit! Run over.';
+ document.querySelector('#bannerText').textContent=`Distance: ${distance().toLocaleString()}m · Cash: $${(p.cash*100).toLocaleString()} · Near-miss bonus: ${nearMissBonus.toLocaleString()} · Final score: ${score().toLocaleString()} · Best: ${best.toLocaleString()}`;
+ banner.style.display='none';updateHUD();updateInventory();
+ document.querySelector('#gameOverSummary').textContent=`DISTANCE ${distance().toLocaleString()}m  •  CASH $${(p.cash*100).toLocaleString()}  •  SCORE ${score().toLocaleString()}`;
+ const run={id:Date.now(),name:'WLF',score:score(),distance:distance(),cash:p.cash*100,near:nearMissBonus};
+ if(run.score>0&&(online||scores.length<10||run.score>scores[scores.length-1].score)){pending=run;initialsInput.value=''}
+ else pending=null;
+ gameOverOverlay.hidden=false;
+
+}
+function update(dt){
+ if(ended||scoresPaused||introVisible)return;elapsed+=dt;
+ const move=Number(keys.right)-Number(keys.left);
+ // Forward motion is automatic; the player can accelerate or slow down.
+ buffTime=Math.max(0,buffTime-dt);
+ updateMusicRate(dt);
+ const speed=currentSpeed()*scale*(buffTime>0?.65:1);
+ p.x+=Math.max(100*scale,speed+move*115*scale)*(p.onGround?1:1.10)*dt;
+ if(move)p.face=move;
+ p.vy+=(p.vy<0?2500:3400)*scale*dt;p.y+=p.vy*dt;
+ if(p.y+p.h>=ground){p.y=ground-p.h;p.vy=0;p.onGround=true}else p.onGround=false;
+ if(p.onGround)p.step+=dt*(9+speed/160);else p.step=1;
+ spawnAhead();
+ // Collision geometry is deliberately narrower than the character artwork.
+ const playerLeft=p.x+p.w*.29,playerRight=p.x+p.w*.69;
+ const feet=p.y+p.h,bodyBottom=p.y+p.h*.96;
+ for(const o of objects){
+   if(o.kind==='road'){
+     const left=o.x+o.w*.13,right=o.x+o.w*.87,top=ground-o.h*.82+20;
+     if(playerRight>left&&playerLeft<right&&feet>top+8*scale){gameOver();break}
+     // Award once only after the player fully clears the obstacle.
+     // A near miss requires the feet to pass within 32 pixels above its top.
+     if(!o.passed&&playerLeft>right){
+       o.passed=true;
+       if(o.closestClearance!==undefined&&o.closestClearance>=0&&o.closestClearance<=32*scale){
+         nearMisses++;nearMissBonus+=50;
+         toast={text:'NEAR MISS! +50',x:p.x,y:p.y-18*scale,life:1.1};
+         for(let j=0;j<12;j++)particles.push({x:p.x+p.w*.5,y:p.y+p.h*.7,vx:rand(-110,110),vy:rand(-180,-45),life:.6});
+       }
+     }
+     if(!o.passed&&playerRight>left&&playerLeft<right&&feet<=top+8*scale){
+       const clearance=top-feet;
+       o.closestClearance=Math.min(o.closestClearance??Infinity,clearance);
+     }
+   }else if(!o.taken){
+     const dx=o.x-(p.x+p.w*.5),dy=o.y-(p.y+p.h*.58);
+     if(Math.abs(dx)<p.w*.52&&Math.abs(dy)<p.h*.49){
+       o.taken=true;
+       if(o.kind==='edible'){if(edibles<3){edibles++;toast={text:'EDIBLE +1',x:p.x,y:p.y-18*scale,life:1};}else{toast={text:'INVENTORY FULL',x:p.x,y:p.y-18*scale,life:1};}}else p.cash++;
+       for(let j=0;j<10;j++)particles.push({x:o.x,y:o.y,vx:rand(-125,125),vy:rand(-200,-45),life:.6});
+     }
+   }
+ }
+ objects=objects.filter(o=>o.x>p.x-W*.8&&!o.taken);
+ for(const a of particles){a.life-=dt;a.x+=a.vx*dt;a.y+=a.vy*dt;a.vy+=300*dt}
+ particles=particles.filter(a=>a.life>0);
+ if(toast){toast.life-=dt;toast.y-=28*dt;if(toast.life<=0)toast=null}
+ cam+=(Math.max(0,p.x-W*.30)-cam)*Math.min(1,dt*8);
+ updateHUD();updateInventory();
+}
+function draw(){
+ ctx.clearRect(0,0,W,H);
+ const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#54b9f2');sky.addColorStop(.7,'#c6e5fc');sky.addColorStop(1,'#fff1c5');
+ ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+ if(bg.complete&&bg.naturalWidth){
+   const sourceTop=51,sourceHeight=Math.min(215,bg.naturalHeight-51);
+   const rh=Math.max(H*.67,310),rw=bg.naturalWidth/sourceHeight*rh;
+   // Modulo-based repetition means the scenery can scroll indefinitely.
+   const offset=-(((cam*.23)%rw)+rw)%rw;
+   for(let x=offset-rw;x<W+rw;x+=rw)ctx.drawImage(bg,0,sourceTop,bg.naturalWidth,sourceHeight,x,ground-rh+18,rw,rh);
+ }
+ ctx.fillStyle='#23334a';ctx.fillRect(0,ground,W,H-ground);
+ ctx.fillStyle='#485565';ctx.fillRect(0,ground,W,7);
+ ctx.fillStyle='#657282';
+ for(let x=-(cam%110);x<W;x+=110){ctx.fillRect(x,ground+28,67,3);ctx.fillRect(x+85,ground+55,20,2)}
+ for(const o of objects){
+   const x=o.x-cam;if(x<-130||x>W+130)continue;
+   if(o.kind==='road'){
+     const y=ground-o.h+20;
+     if(road.complete&&road.naturalWidth)ctx.drawImage(road,x,y,o.w,o.h);
+     else{ctx.fillStyle='#ff8d24';ctx.fillRect(x,y,o.w,o.h)}
+   }else if(!o.taken){
+     const bob=Math.sin(elapsed*4+o.x*.02)*3*scale,w=54*scale,h=37*scale;
+     ctx.save();ctx.shadowColor='#ffdc57';ctx.shadowBlur=13;
+     if(o.kind==='edible'){const im=edibleFrames[Math.floor(glowClock*7)%4];ctx.shadowColor='#58ff62';if(im.complete&&im.naturalWidth)ctx.drawImage(im,x-w/2,o.y-h/2+bob,w,h)}
+     else if(cash.complete&&cash.naturalWidth)ctx.drawImage(cash,x-w/2,o.y-h/2+bob,w,h);
+     else{ctx.fillStyle='#1b8c4c';ctx.fillRect(x-w/2,o.y-h/2+bob,w,h)}
+     ctx.restore();
+   }
+ }
+ for(const a of particles){ctx.globalAlpha=Math.max(0,a.life/.6);ctx.fillStyle='#ffe368';ctx.fillRect(a.x-cam,a.y,5,5)}
+ ctx.globalAlpha=1;
+ if(toast){
+   ctx.save();ctx.globalAlpha=Math.min(1,toast.life*2);
+   ctx.font=`bold ${Math.round(21*scale)}px system-ui`;ctx.textAlign='center';
+   ctx.lineWidth=4;ctx.strokeStyle='#1d2636';ctx.fillStyle='#ffe569';
+   ctx.strokeText(toast.text,toast.x-cam+p.w*.5,toast.y);
+   ctx.fillText(toast.text,toast.x-cam+p.w*.5,toast.y);ctx.restore();
+ }
+ const sprite=(!p.onGround&&jumpSprite.complete&&jumpSprite.naturalWidth)?jumpSprite:sprites[Math.floor(p.step)%4];
+ if(sprite.complete&&sprite.naturalWidth){
+   ctx.save();ctx.translate(p.x-cam+p.w/2,p.y);ctx.scale(p.face,1);
+   const dh=p.h*1.8,dw=dh*(sprite.naturalWidth/sprite.naturalHeight);
+   ctx.drawImage(sprite,-dw/2,p.h-dh,dw,dh);ctx.restore();
+ }else{ctx.fillStyle='#111';ctx.fillRect(p.x-cam,p.y,p.w,p.h)}
+ if(buffTime>0){ctx.save();ctx.fillStyle='#8cff8d';ctx.font='bold 18px system-ui';ctx.textAlign='center';ctx.fillText(`EDIBLE SLOWDOWN  ${buffTime.toFixed(1)}s`,W/2,50);ctx.restore()}
+ ctx.fillStyle='#fff9';ctx.font='12px system-ui';ctx.fillText('WASHINGTON, DC  •  ENDLESS RUN',Math.max(10,W-285),24);
+}
+function frame(t){const dt=Math.min((t-last)/1000||0,.033);last=t;glowClock=t/1000;update(dt);const glowFrame=1+Math.floor(glowClock*7)%4;for(const slot of slots){const im=slot.firstElementChild;if(im&&im.dataset.frame!==String(glowFrame)){im.src=`assets/edible-${glowFrame}.png`;im.dataset.frame=String(glowFrame)}}draw();requestAnimationFrame(frame)}
+addEventListener('resize',resize);resize();reset();introOverlay.hidden=true;titleStart.focus();requestAnimationFrame(frame);
+})();
+</script></body></html>
